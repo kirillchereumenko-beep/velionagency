@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Velion — Сайты, которые продают</title>
+  <meta name="description" content="Премиальный дизайн и разработка. +30–70% к конверсии за 14–25 дней."/>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'velion-green': '#00E6A0',
+            'velion-gold': '#D4AF77',
+            'velion-dark': '#0A0A0A',
+            'velion-darker': '#111111',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Satoshi', 'Helvetica Neue', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Satoshi:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <style>
+    body { background: #0A0A0A; color: #E0E0E0; }
+    .logo-header {
+      position: fixed;
+      top: 1rem;
+      left: 1.5rem;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Маленький логотип слева сверху -->
+  <div class="logo-header">
+    <img src="https://i.postimg.cc/WFZrzxCm/3fab9d5a.jpg" alt="Velion" class="h-12 w-auto">
+  </div>
+
+  <!-- Плавающая кнопка Telegram -->
+  <a href="https://t.me/m/wrkK_h5AOTg6" target="_blank" 
+     class="fixed bottom-6 right-6 z-50 bg-velion-green text-black font-bold px-6 py-4 rounded-full shadow-2xl hover:bg-opacity-90 transition transform hover:scale-105 flex items-center gap-2">
+    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.36l-3.5 8.4c-.26.62-.98.62-1.24 0l-1.5-3.5-3.5-1.5c-.62-.26-.62-.98 0-1.24l8.4-3.5c.55-.23 1.07.29.84.84z"/></svg>
+    Связаться
+  </a>
+
+  <!-- Hero — чистый, без логотипа по центру -->
+  <header class="min-h-screen flex items-center justify-center relative bg-velion-darker">
+    <div class="relative z-10 text-center px-6 max-w-5xl" data-aos="fade-up" data-aos-duration="1400">
+      <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-none mb-8 text-white">
+        Сайты,<br><span class="text-velion-green">которые продают</span>
+      </h1>
+
+      <p class="text-2xl md:text-4xl text-gray-300 font-light mb-12">
+        Премиальный дизайн • Быстрая разработка<br>
+        <span class="text-velion-green font-bold">+30–70% к конверсии</span> за 14–25 дней
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a href="https://t.me/m/wrkK_h5AOTg6" target="_blank"
+           class="bg-velion-green text-black font-bold text-xl px-12 py-6 rounded-2xl hover:bg-opacity-90 transition transform hover:scale-105 shadow-2xl">
+          Получить расчёт за 5 минут
+        </a>
+        <a href="#cases" 
+           class="border-2 border-velion-gold text-velion-gold font-bold text-xl px-12 py-6 rounded-2xl hover:bg-velion-gold hover:text-black transition">
+          Посмотреть кейсы
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Преимущества -->
+  <section class="py-20 bg-velion-darker">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-12 text-center" data-aos="fade-up">
+      <div><div class="text-6xl font-black text-velion-green">+30–70%</div><p class="mt-4 text-xl">конверсия</p></div>
+      <div><div class="text-6xl font-black text-velion-gold">50+</div><p class="mt-4 text-xl">проектов</p></div>
+      <div><div class="text-6xl font-black text-velion-green">14–25</div><p class="mt-4 text-xl">дней</p></div>
+      <div><div class="text-6xl font-black text-velion-gold">Premium</div><p class="mt-4 text-xl">дизайн</p></div>
+    </div>
+  </section>
+
+  <!-- Услуги + Калькулятор -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-5xl font-black text-center mb-16" data-aos="fade-up">Услуги и цены</h2>
+      
+      <div class="grid md:grid-cols-3 gap-10 mb-20">
+        <div class="bg-velion-dark p-8 rounded-2xl border border-velion-green/30 hover:border-velion-green transition" data-aos="fade-up">
+          <h3 class="text-3xl font-bold text-velion-green">Сайт с нуля</h3>
+          <p class="mt-4 text-gray-400">Дизайн + разработка + адаптив</p>
+          <p class="mt-6 text-4xl font-black text-white">от 5000 ₽</p>
+        </div>
+        <div class="bg-velion-dark p-8 rounded-2xl border border-velion-green/30 hover:border-velion-green transition" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-3xl font-bold text-velion-green">Редизайн</h3>
+          <p class="mt-4 text-gray-400">Аудит + новый дизайн</p>
+          <p class="mt-6 text-4xl font-black text-white">от 3000 ₽</p>
+        </div>
+        <div class="bg-velion-dark p-8 rounded-2xl border border-velion-green/30 hover:border-velion-green transition" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="text-3xl font-bold text-velion-green">Поддержка</h3>
+          <p class="mt-4 text-gray-400">Доработки + обновления</p>
+          <p class="mt-6 text-4xl font-black text-white">от 2000 ₽/мес</p>
+        </div>
+      </div>
+
+      <!-- Калькулятор -->
+      <div class="bg-velion-darker p-10 rounded-2xl max-w-2xl mx-auto" data-aos="zoom-in">
+        <h3 class="text-3xl font-bold text-center mb-8">Рассчитать стоимость</h3>
+        <form id="calcForm" class="space-y-6">
+          <div>
+            <label class="block text-lg mb-2">Тип работы</label>
+            <select id="type" class="w-full p-4 bg-black border border-gray-700 rounded-xl text-white">
+              <option value="5000">Сайт с нуля</option>
+              <option value="3000">Редизайн</option>
+              <option value="2000">Поддержка (месяц)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-lg mb-2">Сложность</label>
+            <select id="complexity" class="w-full p-4 bg-black border border-gray-700 rounded-xl text-white">
+              <option value="1">Простой (лендинг)</option>
+              <option value="1.5">Средний</option>
+              <option value="2">Сложный (магазин)</option>
+            </select>
+          </div>
+          <button type="button" onclick="calculatePrice()" 
+                  class="w-full bg-velion-green text-black font-bold text-xl py-5 rounded-xl hover:bg-opacity-90 transition">
+            Рассчитать
+          </button>
+          <div id="result" class="text-4xl font-black text-center mt-6 text-velion-green hidden">
+            Итого: <span id="price">0</span> ₽
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function calculatePrice() {
+      const type = parseFloat(document.getElementById('type').value);
+      const complexity = parseFloat(document.getElementById('complexity').value);
+      const total = Math.round(type * complexity);
+      document.getElementById('price').textContent = total.toLocaleString('ru-RU');
+      document.getElementById('result').classList.remove('hidden');
+    }
+  </script>
+
+  <!-- Кейсы -->
+  <section id="cases" class="py-20 bg-velion-darker">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-5xl font-black text-center mb-16" data-aos="fade-up">Реальные результаты</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <a href="https://imperiummotors.ru/" target="_blank" class="block bg-velion-dark rounded-2xl overflow-hidden border border-velion-green/20 hover:border-velion-green transition group" data-aos="fade-up">
+          <img src="https://i.postimg.cc/bZLRjcfw/568494dc.jpg" alt="Imperium Motors" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-velion-green">Imperium Motors</h3>
+            <p class="text-gray-400 mt-1">Премиальный автосалон</p>
+            <div class="mt-4 text-sm space-y-2">
+              <p>После редизайна и ускорения загрузки:</p>
+              <p><strong>Конверсия</strong> выросла с 2.1% до 7.8% (+272%)</p>
+              <p><strong>Количество лидов</strong> ×3.4 в месяц</p>
+              <p class="text-velion-gold font-semibold">Окупаемость за 18 дней</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://riverpark-kutuzovskiy.ru/" target="_blank" class="block bg-velion-dark rounded-2xl overflow-hidden border border-velion-green/20 hover:border-velion-green transition group" data-aos="fade-up" data-aos-delay="100">
+          <img src="https://i.postimg.cc/gL9VKG8N/06f5c6d6.jpg" alt="River Park Kutuzovskiy" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-velion-green">River Park Кутузовский</h3>
+            <p class="text-gray-400 mt-1">Сайт жилого комплекса премиум-класса</p>
+            <div class="mt-4 text-sm space-y-2">
+              <p>Новый дизайн + удобная форма заявки:</p>
+              <p><strong>Конверсия</strong> увеличилась на 240%</p>
+              <p><strong>Интерес к объекту</strong> вырос в 3.8 раза</p>
+              <p class="text-velion-gold font-semibold">Заявок в месяц ×3.2</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://www.ambc.ru/" target="_blank" class="block bg-velion-dark rounded-2xl overflow-hidden border border-velion-green/20 hover:border-velion-green transition group" data-aos="fade-up" data-aos-delay="200">
+          <img src="https://i.postimg.cc/vgx794gm/8fa7fe1f.jpg" alt="AMBC Стоматология" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-velion-green">AMBC Михаила Агами</h3>
+            <p class="text-gray-400 mt-1">Семейная стоматология</p>
+            <div class="mt-4 text-sm space-y-2">
+              <p>После полного обновления сайта и онлайн-записи:</p>
+              <p><strong>Конверсия</strong> выросла с 3.9% до 11.8% (+202%)</p>
+              <p><strong>Записей на приём</strong> увеличилось в 3.1 раза</p>
+              <p class="text-velion-gold font-semibold">Средний чек +47%</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отзывы -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-5xl font-black mb-16" data-aos="fade-up">Что говорят клиенты</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-velion-dark p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+          <p class="text-xl italic">"Конверсия взлетела в 3 раза за первый месяц. Рекомендую!"</p>
+          <p class="mt-6 font-bold text-velion-gold">Алексей • Автобизнес</p>
+        </div>
+        <div class="bg-velion-dark p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+          <p class="text-xl italic">"Сайт теперь продаёт, а не просто красивый. Лидов стало в 3.5 раза больше."</p>
+          <p class="mt-6 font-bold text-velion-gold">Марина • Недвижимость</p>
+        </div>
+        <div class="bg-velion-dark p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+          <p class="text-xl italic">"Онлайн-запись работает идеально. Пациентов +210% за квартал."</p>
+          <p class="mt-6 font-bold text-velion-gold">Дмитрий • Медицина</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-black/50">
+    <div class="max-w-4xl mx-auto px-6 text-center" data-aos="zoom-in">
+      <h2 class="text-5xl md:text-6xl font-black mb-10">Готовы увеличить продажи?</h2>
+      <a href="https://t.me/m/wrkK_h5AOTg6" target="_blank"
+         class="inline-block bg-velion-green text-black font-bold text-2xl px-16 py-8 rounded-2xl hover:bg-opacity-90 transition transform hover:scale-105 shadow-2xl">
+        Написать в Telegram
+      </a>
+      <p class="mt-12 text-xl">или на почту: <a href="mailto:velion.agency@gmail.com" class="text-velion-green hover:underline">velion.agency@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- Футер с логотипом -->
+  <footer class="py-12 text-center text-gray-500 border-t border-gray-800">
+    <img src="https://i.postimg.cc/WFZrzxCm/3fab9d5a.jpg" alt="Velion Logo" class="h-10 w-auto mx-auto mb-4 opacity-70">
+    © 2026 Velion
+  </footer>
+
+  <script>
+    AOS.init({ once: true, duration: 1000 });
+  </script>
+</body>
+</html>
