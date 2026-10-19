@@ -1631,8 +1631,14 @@ document.addEventListener("DOMContentLoaded",()=>{
     }); }, { threshold:[0, .02, .25] }).observe(hero);
   }
 
-  // video drifts with the cursor
+  // slower, calmer rotation
   var vid = hero.querySelector('.vh-video');
+  if(vid){
+    var slow = function(){ vid.defaultPlaybackRate = 0.5; vid.playbackRate = 0.5; };
+    slow(); vid.addEventListener('loadedmetadata', slow); vid.addEventListener('play', slow);
+  }
+
+  // video drifts with the cursor
   if(vid && window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches){
     hero.addEventListener('pointermove', function(e){
       var r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
