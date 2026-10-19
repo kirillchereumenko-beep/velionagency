@@ -1352,16 +1352,26 @@ document.addEventListener("DOMContentLoaded",()=>{
     var h1 = $('.h-hero'); if(h1){ splitWords(h1); requestAnimationFrame(function(){ setTimeout(function(){ h1.classList.add('words-in'); }, 120); }); }
 
     var io = new IntersectionObserver(function(es){ es.forEach(function(e){
-      if(!e.isIntersecting) return;
-      var t = e.target; io.unobserve(t);
-      if(t.classList.contains('nh-h2')){ t.classList.add('words-in'); return; }
-      t.classList.add('is-in');
-      if(t.classList.contains('nh-case')) t.classList.add('shot-in');
-      // hand control back to the element's own hover transitions once it has arrived
+      var t = e.target, isHead = t.classList.contains('nh-h2') || t.classList.contains('h-hero');
+      var shown = e.isIntersecting && (e.intersectionRatio >= .12 || e.intersectionRect.height > innerHeight * .3);
+      if(!e.isIntersecting){
+        // left the screen: reset so it animates again next time it comes into view
+        clearTimeout(t._settle);
+        if(isHead){ t.classList.remove('words-in'); return; }
+        t.classList.add('reveal'); t.classList.remove('is-in', 'shot-in');
+        return;
+      }
+      if(!shown) return;
+      if(isHead){ t.classList.add('words-in'); return; }
+      t.classList.add('reveal');
+      requestAnimationFrame(function(){ t.classList.add('is-in'); if(t.classList.contains('nh-case')) t.classList.add('shot-in'); });
+      // once it has arrived, hand control back to the element's own hover transitions
       var d = parseFloat(t.style.getPropertyValue('--d')) || 0;
-      setTimeout(function(){ t.classList.remove('reveal', 'is-in', 'rv-l', 'rv-r'); }, 1300 + d * 1000);
-    }); }, { threshold: .14, rootMargin: '0px 0px -6% 0px' });
+      clearTimeout(t._settle);
+      t._settle = setTimeout(function(){ t.classList.remove('reveal', 'is-in'); }, 1300 + d * 1000);
+    }); }, { threshold: [0, .12, .3], rootMargin: '0px 0px -6% 0px' });
     $$('.reveal, .nh-h2').forEach(function(el){ io.observe(el); });
+    var h1o = $('.h-hero'); if(h1o) io.observe(h1o);
 
     // re-split after a language switch (text is replaced by i18n)
     if(typeof window.setLang === 'function'){
