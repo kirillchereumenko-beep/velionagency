@@ -666,6 +666,96 @@ tailwind.config = {
   /* the rest of the site keeps its look; the old glass header rule no longer applies */
   #site-header .glass-nav{ display:none; }
 </style>
+<style>
+  /* ===== Iridescent palette taken from the hero video ===== */
+  :root{
+    --iri:linear-gradient(100deg,#5E0ED7 0%,#3B5BFF 38%,#22B8E6 66%,#E879F9 100%);
+    --iri-soft:linear-gradient(100deg,rgba(94,14,215,.12),rgba(59,91,255,.10) 40%,rgba(34,184,230,.10) 70%,rgba(232,121,249,.12));
+    --violet:#5E0ED7; --lav:#F1ECFF;
+  }
+  ::selection{ background:rgba(94,14,215,.2); }
+  #progress{ background:var(--iri) !important; height:3px !important; }
+
+  /* text accents */
+  .nh-h2 .gradient-text, .nh-h2 span.gradient-text{
+    background:var(--iri) !important; background-size:200% auto !important; -webkit-background-clip:text !important; background-clip:text !important;
+    color:transparent !important; opacity:1 !important; animation:shimmer 8s linear infinite !important; }
+  .nh-eyebrow{ color:var(--violet); }
+  .nh-eyebrow-dark{ color:#C4A8FF; }
+  .nh-eyebrow::before{ background:var(--iri); width:8px; height:8px; }
+  .nh-link:hover{ color:var(--violet); opacity:1; }
+
+  /* light (mist) sections get a faint coloured haze */
+  .nh-mist{ background:
+    radial-gradient(700px 420px at 100% 0%, rgba(232,121,249,.10), transparent 70%),
+    radial-gradient(760px 480px at 0% 100%, rgba(59,91,255,.09), transparent 70%),
+    var(--nh-mist) !important; }
+
+  /* marquee band */
+  .nh-band-item::after{ background:var(--iri); }
+  .nh-band-item:hover{ color:transparent; background:var(--iri); -webkit-background-clip:text; background-clip:text; }
+
+  /* buttons */
+  .nh-btn-light:hover{ background:var(--violet) !important; color:#fff !important; }
+  .nh-btn-ghost:hover{ border-color:#C4A8FF !important; color:#fff; }
+  .nh-acc-cta{ background:var(--iri) !important; background-size:160% auto !important; transition:background-position .6s, transform .3s !important; }
+  .nh-acc-cta:hover{ background-position:100% 0 !important; }
+
+  /* services accordion */
+  .nh-acc{ position:relative; }
+  .nh-acc::before{ content:""; position:absolute; left:0; top:14px; bottom:14px; width:3px; border-radius:3px; background:var(--iri); transform:scaleY(0); transform-origin:top; transition:transform .5s var(--ez,ease); }
+  .nh-acc.open::before, .nh-acc:hover::before{ transform:scaleY(1); }
+  .nh-acc.open .nh-num, .nh-acc:hover .nh-num{ color:var(--violet); }
+  .nh-acc.open .nh-row-ic, .nh-acc:hover .nh-row-ic{ color:var(--violet); }
+  .nh-acc:hover .nh-plus, .nh-acc.open .nh-plus{ background:var(--violet) !important; border-color:var(--violet) !important; }
+  .nh-acc-in .it{ background:var(--lav); color:#3B1F7A; }
+
+  /* dark sections: iridescent glow */
+  #ai.nh-dark{ background:
+    radial-gradient(640px 460px at 88% 12%, rgba(94,14,215,.38), transparent 70%),
+    radial-gradient(560px 420px at 8% 92%, rgba(34,184,230,.20), transparent 70%),
+    #0B0B0C !important; }
+  .nh-cta{ background:
+    radial-gradient(820px 420px at 50% 0%, rgba(94,14,215,.42), transparent 70%),
+    radial-gradient(520px 380px at 90% 100%, rgba(232,121,249,.20), transparent 70%),
+    radial-gradient(520px 380px at 8% 90%, rgba(59,91,255,.22), transparent 70%),
+    #0B0B0C !important; }
+  .nh-dark > .spot{ background:radial-gradient(600px circle at var(--mx) var(--my), rgba(150,110,255,.14), transparent 60%) !important; }
+  .nh-mini svg{ color:#C4A8FF; opacity:1; }
+  .nh-mini:hover{ border-color:rgba(196,168,255,.35) !important; background:rgba(94,14,215,.10) !important; }
+  .nh-chat .msg-c{ background:linear-gradient(135deg,#5E0ED7,#3B5BFF) !important; color:#fff !important; }
+  .nh-ava{ background:var(--iri) !important; color:#fff !important; }
+  .nh-chat .msg-meta{ color:#C4A8FF !important; }
+  .nh-cta .nh-h2 .gradient-text{ filter:brightness(1.25); }
+
+  /* cases */
+  .nh-case .nh-mono{ color:var(--violet) !important; }
+  .nh-case:hover{ box-shadow:0 40px 70px -40px rgba(94,14,215,.45), 0 0 0 1px rgba(94,14,215,.12) !important; }
+  .nh-case-go{ color:var(--violet); }
+
+  /* client work cards */
+  .nh-ini{ background:var(--iri) !important; }
+  .nh-done:hover{ box-shadow:0 30px 60px -40px rgba(94,14,215,.4), 0 0 0 1px rgba(94,14,215,.10) !important; }
+  .nh-done li{ position:relative; padding-left:18px !important; }
+  .nh-done li::after{ content:""; position:absolute; left:0; top:50%; width:7px; height:7px; margin-top:-3.5px; border-radius:99px; background:var(--iri); }
+
+  /* calculator */
+  #calc .chip.sel{ border-color:var(--violet) !important; background:var(--lav) !important; box-shadow:0 0 0 1px var(--violet) !important; }
+  #calc .chip:hover{ border-color:rgba(94,14,215,.45) !important; }
+  #calc .chip.sel .chip-icon{ background:var(--iri) !important; }
+  #calc .chip.sel .chip-radio{ border-color:var(--violet) !important; }
+  #calc .chip.sel .chip-toggle-mark{ background:var(--violet) !important; border-color:var(--violet) !important; }
+  #calc .nh-step span:first-child{ color:var(--violet); }
+  #calc .calc-result{ background:
+    radial-gradient(520px 380px at 100% 0%, rgba(94,14,215,.55), transparent 65%),
+    radial-gradient(420px 320px at 0% 100%, rgba(34,184,230,.28), transparent 65%),
+    radial-gradient(360px 260px at 100% 100%, rgba(232,121,249,.22), transparent 65%),
+    #0B0B0C !important; }
+  #calc-price{ background:linear-gradient(100deg,#fff 30%,#D9C8FF 70%,#9FE6FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  /* footer */
+  .nh-soc:hover{ background:var(--iri) !important; color:#fff !important; border-color:transparent !important; }
+</style>
 </head>
 <body class="font-inter">
   <div id="progress"></div>
@@ -1031,8 +1121,8 @@ tailwind.config = {
     <div class="nh-wrap">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <a href="#top" class="flex items-center gap-2.5">
-          <span class="grid place-items-center h-9 w-9 rounded-[9px] bg-white text-[#0B0B0C] nh-display text-[15px]">V</span>
-          <span class="nh-display text-[22px] text-white">Velion</span>
+          <span class="vh-logo-ring" style="border-color:#B794FF"><span class="vh-logo-dot" style="background:#B794FF"></span></span>
+          <span class="vh-logo-word text-white">Velion</span>
         </a>
         <div class="flex items-center gap-2">
           <a href="https://t.me/velion_agency" target="_blank" rel="noopener" class="nh-soc" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.3 18.6 20.06c-.25 1.1-.9 1.38-1.83.86l-5.06-3.73-2.44 2.35c-.27.27-.5.5-1.02.5l.36-5.16 9.4-8.49c.4-.36-.09-.56-.63-.2L4.13 13.3l-5-1.56c-1.09-.34-1.1-1.09.23-1.61l19.55-7.53c.9-.34 1.7.2 1.4 1.7z"/></svg></a>
