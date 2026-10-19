@@ -550,6 +550,17 @@ tailwind.config = {
   @media (hover:none){ .hero-spot, .hero-grid-hot{ display:none; } }
 </style>
 <style>
+  /* phones: quicker, shorter reveals so content keeps up with fast scrolling */
+  @media (max-width:767px){
+    .js .reveal{ transform:translateY(16px); transition:opacity .45s var(--ez), transform .55s var(--ez) !important; }
+    .js .reveal.rv-l, .js .reveal.rv-r{ transform:translateY(16px); }
+    .js .reveal.is-in{ transform:none; }
+    .w > span{ transition-duration:.6s; }
+    .js .nh-case .nh-case-img{ transition-duration:.75s; }
+    .nh-case-img img{ transition:opacity .5s var(--ez), transform .9s var(--ez) !important; }
+  }
+</style>
+<style>
   /* ===== Video hero ===== */
   :root{ --vh-accent:#0B0B0C; --vh-ez:cubic-bezier(.22,1,.36,1); --vh-px:20px; }
   @media (min-width:640px){ :root{ --vh-px:32px; } }
@@ -1418,6 +1429,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var fine = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var small = window.matchMedia && matchMedia('(max-width: 767px)').matches;
 
   function ready(fn){ if(document.readyState !== 'loading') setTimeout(fn, 0); else document.addEventListener('DOMContentLoaded', function(){ setTimeout(fn, 0); }); }
 
@@ -1442,7 +1454,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     };
     walk(h);
     $$('.gradient-text', h).forEach(function(x){ if(x.querySelector('.w')) x.classList.remove('gradient-text'); });
-    $$('.w', h).forEach(function(w, i){ w.firstChild.style.setProperty('--wd', (i * 0.055) + 's'); });
+    $$('.w', h).forEach(function(w, i){ w.firstChild.style.setProperty('--wd', (i * (small ? 0.03 : 0.055)) + 's'); });
     h.dataset.split = '1';
   }
 
@@ -1463,7 +1475,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     // stagger siblings
     var groups = new Map();
     $$('.reveal').forEach(function(el){ var p = el.parentElement; if(!groups.has(p)) groups.set(p, []); groups.get(p).push(el); });
-    groups.forEach(function(list){ list.forEach(function(el, i){ el.style.setProperty('--d', Math.min(i * 0.08, 0.6) + 's'); }); });
+    groups.forEach(function(list){ list.forEach(function(el, i){ el.style.setProperty('--d', (small ? Math.min(i * 0.04, 0.2) : Math.min(i * 0.08, 0.6)) + 's'); }); });
 
     // headings
     $$('.nh-h2').forEach(splitWords);
@@ -1486,8 +1498,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       // once it has arrived, hand control back to the element's own hover transitions
       var d = parseFloat(t.style.getPropertyValue('--d')) || 0;
       clearTimeout(t._settle);
-      t._settle = setTimeout(function(){ t.classList.remove('reveal', 'is-in'); }, 1300 + d * 1000);
-    }); }, { threshold: [0, .12, .3], rootMargin: '0px 0px -6% 0px' });
+      t._settle = setTimeout(function(){ t.classList.remove('reveal', 'is-in'); }, (small ? 750 : 1300) + d * 1000);
+    }); }, { threshold: [0, .12, .3], rootMargin: small ? '0px 0px 8% 0px' : '0px 0px -6% 0px' });
     $$('.reveal, .nh-h2').forEach(function(el){ io.observe(el); });
     var h1o = $('.h-hero'); if(h1o) io.observe(h1o);
 
