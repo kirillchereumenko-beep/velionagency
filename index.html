@@ -549,116 +549,208 @@ tailwind.config = {
 
   @media (hover:none){ .hero-spot, .hero-grid-hot{ display:none; } }
 </style>
+<style>
+  /* ===== Video hero ===== */
+  :root{ --vh-accent:#5E0ED7; --vh-ez:cubic-bezier(.22,1,.36,1); --vh-px:20px; }
+  @media (min-width:640px){ :root{ --vh-px:32px; } }
+  @media (min-width:768px){ :root{ --vh-px:48px; } }
+
+  /* nav */
+  .vh-header{ position:fixed; top:0; left:0; right:0; z-index:50; transition:transform .5s var(--vh-ez), background .4s, border-color .4s, backdrop-filter .4s; border-bottom:1px solid transparent; }
+  .vh-header.scrolled{ background:rgba(243,243,241,.8); -webkit-backdrop-filter:saturate(1.4) blur(14px); backdrop-filter:saturate(1.4) blur(14px); border-bottom-color:rgba(11,11,12,.08); }
+  #site-header.hide{ transform:translateY(-110%); }
+  .vh-nav{ display:flex; align-items:center; justify-content:space-between; padding:20px var(--vh-px) 16px; font-family:'Inter',sans-serif; }
+  @media (min-width:768px){ .vh-nav{ padding-top:24px; } }
+  .vh-header.scrolled .vh-nav{ padding-top:14px; padding-bottom:14px; }
+  .vh-nav{ transition:padding .4s var(--vh-ez); }
+  .vh-logo{ display:flex; align-items:center; gap:10px; color:#000; }
+  .vh-logo-ring{ width:32px; height:32px; border-radius:999px; border:2px solid var(--vh-accent); display:grid; place-items:center; transition:transform .6s var(--vh-ez); }
+  .vh-logo-dot{ width:10px; height:10px; border-radius:999px; background:var(--vh-accent); transition:transform .5s var(--vh-ez); }
+  .vh-logo:hover .vh-logo-ring{ transform:rotate(180deg) scale(1.06); }
+  .vh-logo:hover .vh-logo-dot{ transform:scale(1.5); }
+  .vh-logo-word{ font-weight:600; font-size:14px; letter-spacing:.2em; text-transform:uppercase; }
+  .vh-links{ display:none; gap:36px; }
+  @media (min-width:768px){ .vh-links{ display:flex; } }
+  .vh-link{ position:relative; font-size:14px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#000; padding:4px 0; }
+  .vh-link::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1.5px; background:var(--vh-accent); transform:scaleX(0); transform-origin:right; transition:transform .4s var(--vh-ez); }
+  .vh-link:hover::after{ transform:scaleX(1); transform-origin:left; }
+  .vh-right{ display:flex; align-items:center; gap:14px; }
+  .vh-lang{ background:transparent !important; border:1px solid rgba(0,0,0,.14) !important; border-radius:999px; font-family:'Inter',sans-serif; }
+  .vh-lang button{ border-radius:999px !important; letter-spacing:.1em; color:rgba(0,0,0,.5) !important; }
+  .vh-lang button.active{ background:#000 !important; color:#fff !important; box-shadow:none !important; }
+  .vh-burger{ width:36px; height:36px; border-radius:999px; background:#000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; transition:transform .4s var(--vh-ez), background .3s; }
+  .vh-burger span{ width:16px; height:2px; background:#fff; border-radius:2px; transition:transform .4s var(--vh-ez), width .4s var(--vh-ez); }
+  .vh-burger:hover{ transform:scale(1.08); background:var(--vh-accent); }
+  .vh-burger:hover span:nth-child(2){ width:10px; }
+
+  /* menu overlay */
+  #mob-menu.vh-menu{ display:flex; top:0; left:0; right:0; bottom:0; z-index:60; padding:20px var(--vh-px) 32px; }
+  @media (min-width:768px){ #mob-menu.vh-menu{ padding-top:24px; } }
+  .vh-menu{ position:fixed; inset:0; z-index:60; background:#fff; display:flex; flex-direction:column; padding:20px var(--vh-px) 32px; font-family:'Inter',sans-serif;
+    clip-path:circle(0 at calc(100% - var(--vh-px) - 18px) 38px); visibility:hidden; transition:clip-path .8s cubic-bezier(.77,0,.18,1), visibility 0s linear .8s; }
+  .vh-menu.open{ clip-path:circle(150% at calc(100% - var(--vh-px) - 18px) 38px); visibility:visible; transition:clip-path .8s cubic-bezier(.77,0,.18,1), visibility 0s; }
+  @media (min-width:768px){ .vh-menu{ padding-top:24px; } }
+  .vh-menu-top{ display:flex; align-items:center; justify-content:space-between; }
+  .vh-close{ width:36px; height:36px; border-radius:999px; background:#000; color:#fff; display:grid; place-items:center; transition:transform .4s var(--vh-ez); }
+  .vh-close:hover{ transform:rotate(90deg); }
+  .vh-close svg{ width:18px; height:18px; }
+  .vh-menu-links{ display:flex; flex-direction:column; gap:32px; margin-top:64px; }
+  .vh-menu-links a{ font-size:clamp(1.9rem,6vw,3.6rem); font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#000; opacity:0; transform:translateY(24px); transition:opacity .5s, transform .6s var(--vh-ez), color .3s; }
+  .vh-menu-links a:hover{ color:var(--vh-accent); }
+  .vh-menu.open .vh-menu-links a{ opacity:1; transform:none; }
+  .vh-menu.open .vh-menu-links a:nth-child(1){ transition-delay:.25s; } .vh-menu.open .vh-menu-links a:nth-child(2){ transition-delay:.32s; }
+  .vh-menu.open .vh-menu-links a:nth-child(3){ transition-delay:.39s; } .vh-menu.open .vh-menu-links a:nth-child(4){ transition-delay:.46s; }
+  .vh-menu-foot{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+
+  /* hero */
+  .vh{ position:relative; min-height:100vh; min-height:100svh; display:flex; flex-direction:column; overflow:hidden; background:#F2F2F0; font-family:'Inter',sans-serif; color:#000; }
+  .vh-media{ position:absolute; inset:0; }
+  .vh-video{ position:absolute; inset:-3%; width:106%; height:106%; object-fit:cover; object-position:30% 50%; will-change:transform; transition:transform 1.2s var(--vh-ez); }
+  .vh-veil{ position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(242,242,240,.55) 0%, transparent 18%, transparent 62%, rgba(242,242,240,.6) 100%); }
+  @media (max-width:767px){ .vh-video{ object-position:22% 40%; } .vh-veil{ background:linear-gradient(180deg, rgba(242,242,240,.5) 0%, transparent 20%, rgba(242,242,240,.25) 45%, rgba(242,242,240,.85) 100%); } }
+
+  .vh-stats-wrap{ position:relative; flex:1; display:flex; align-items:center; justify-content:flex-end; padding:112px var(--vh-px) 32px; }
+  @media (min-width:768px){ .vh-stats-wrap{ padding-top:96px; padding-bottom:0; } }
+  .vh-stats{ display:flex; gap:20px; }
+  @media (min-width:640px){ .vh-stats{ gap:32px; } }
+  @media (min-width:768px){ .vh-stats{ gap:40px; } }
+  .vh-stat{ text-align:right; }
+  .vh-num{ font-family:'Inter Tight','Inter',sans-serif; font-size:clamp(1.5rem,5vw,3.5rem); font-weight:600; line-height:1; letter-spacing:-.02em; }
+  .vh-plus{ color:var(--vh-accent); font-size:.5em; vertical-align:.55em; margin:0 .08em; }
+  .vh-lab{ margin-top:10px; font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; white-space:pre-line; line-height:1.25; }
+  @media (min-width:640px){ .vh-lab{ font-size:12px; } }
+  @media (min-width:768px){ .vh-lab{ font-size:14px; } }
+
+  .vh-bottom{ position:relative; padding:0 var(--vh-px) 32px; display:flex; flex-direction:column; gap:24px; }
+  @media (min-width:768px){ .vh-bottom{ padding-bottom:48px; gap:48px; } }
+  .vh-row-a{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .vh-tag{ font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; line-height:1.4; max-width:130px; }
+  @media (min-width:640px){ .vh-tag{ font-size:12px; max-width:170px; } }
+  @media (min-width:768px){ .vh-tag{ font-size:14px; max-width:20rem; padding:12px 16px; margin-left:-16px; border-radius:14px;
+    background:rgba(242,242,240,.62); -webkit-backdrop-filter:blur(14px) saturate(1.3); backdrop-filter:blur(14px) saturate(1.3); box-shadow:0 0 0 1px rgba(0,0,0,.05); } }
+  .vh-cta{ display:inline-flex; align-items:center; gap:8px; color:var(--vh-accent); font-weight:600; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; font-size:16px; position:relative; }
+  @media (min-width:640px){ .vh-cta{ font-size:20px; } }
+  @media (min-width:768px){ .vh-cta{ font-size:24px; } }
+  .vh-cta-xl{ font-size:20px; }
+  .vh-cta svg{ width:18px; height:18px; transition:transform .45s var(--vh-ez); }
+  @media (min-width:640px){ .vh-cta svg{ width:22px; height:22px; } }
+  .vh-cta::after{ content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px; background:currentColor; transform:scaleX(0); transform-origin:right; transition:transform .5s var(--vh-ez); }
+  .vh-cta:hover::after{ transform:scaleX(1); transform-origin:left; }
+  .vh-cta:hover svg{ transform:translate(4px,-4px) rotate(45deg); }
+
+  .vh-row-b{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
+  @media (min-width:640px){ .vh-row-b{ gap:16px; } }
+  .vh-desc-wrap{ width:120px; flex-shrink:0; }
+  @media (min-width:640px){ .vh-desc-wrap{ width:180px; } }
+  @media (min-width:768px){ .vh-desc-wrap{ width:280px; } }
+  .vh-desc{ font-size:9px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; line-height:1.5; text-align:left; }
+  @media (min-width:640px){ .vh-desc{ font-size:12px; } }
+  @media (min-width:768px){ .vh-desc{ font-size:14px; text-align:right; } }
+  .vh-h1{ font-family:'Inter Tight','Inter',sans-serif; font-weight:600; text-transform:uppercase; text-align:right; font-size:clamp(2rem,9vw,9rem); line-height:.88; letter-spacing:-.03em; display:flex; flex-direction:column; align-items:flex-end; }
+  .vh-wl{ display:block; overflow:hidden; padding:.14em 0 .06em; margin:-.14em 0 -.06em; }
+  .vh-w{ display:inline-block; transition:color .4s; }
+  .vh-w:hover{ color:var(--vh-accent); }
+
+  /* load animations (Framer Motion values) — replay whenever the hero comes back */
+  .vh-fd{ opacity:0; transform:translateY(-20px); }
+  .play-nav .vh-fd{ animation:vhDown .5s var(--vh-ez) both; animation-delay:calc(var(--i) * .1s); }
+  #hero .vh-fu{ opacity:0; transform:translateY(32px); }
+  #hero.play .vh-fu{ animation:vhUp .6s var(--vh-ez) both; animation-delay:calc(var(--i) * .12s); }
+  #hero .vh-w{ transform:translateY(110%); }
+  #hero.play .vh-w{ animation:vhWord .7s var(--vh-ez) both; animation-delay:calc(.4s + var(--w) * .14s); }
+  @keyframes vhDown{ from{ opacity:0; transform:translateY(-20px); } to{ opacity:1; transform:none; } }
+  @keyframes vhUp{ from{ opacity:0; transform:translateY(32px); } to{ opacity:1; transform:none; } }
+  @keyframes vhWord{ from{ transform:translateY(110%); } to{ transform:none; } }
+
+  /* the rest of the site keeps its look; the old glass header rule no longer applies */
+  #site-header .glass-nav{ display:none; }
+</style>
 </head>
 <body class="font-inter">
   <div id="progress"></div>
 
-  <!-- ============ NAVBAR — Strong Liquid Glass ============ -->
-  <header id="site-header" class="sticky top-4 md:top-[30px] z-50 flex justify-center px-4 h-0">
-    <div class="glass-nav rounded-[16px] w-fit max-w-full flex items-center gap-3 md:gap-7 pl-4 pr-2 py-2 h-fit">
-      <a href="#top" class="flex items-center gap-2.5 shrink-0" aria-label="Velion">
-        <span class="grid place-items-center h-8 w-8 rounded-[9px] f-display font-extrabold text-[15px] text-white" style="background:linear-gradient(135deg,#2F6BFF,#6D5BFF);box-shadow:inset 0 4px 4px rgba(255,255,255,.35)">V</span>
-        <span class="f-display text-[21px] tracking-[-0.5px]">Velion</span>
+  <!-- ============ NAV ============ -->
+  <header id="site-header" class="vh-header">
+    <div class="vh-nav">
+      <a href="#top" class="vh-logo vh-fd" style="--i:0" aria-label="Velion">
+        <span class="vh-logo-ring"><span class="vh-logo-dot"></span></span>
+        <span class="vh-logo-word">Velion</span>
       </a>
-      <nav class="hidden md:flex items-center gap-1 text-[15px] font-medium text-black/65">
-        <a href="#services" class="nav-link" data-i18n="nav_services">Услуги</a>
-        <a href="#ai" class="nav-link" data-i18n="nav_ai">ИИ-агенты</a>
-        <a href="#cases" class="nav-link" data-i18n="nav_cases">Кейсы</a>
-        <a href="#calc" class="nav-link" data-i18n="nav_calc">Стоимость</a>
+      <nav class="vh-links">
+        <a href="#services" class="vh-link vh-fd" style="--i:1" data-i18n="nav_services">Услуги</a>
+        <a href="#ai" class="vh-link vh-fd" style="--i:2" data-i18n="nav_ai">ИИ-агенты</a>
+        <a href="#cases" class="vh-link vh-fd" style="--i:3" data-i18n="nav_cases">Кейсы</a>
+        <a href="#calc" class="vh-link vh-fd" style="--i:4" data-i18n="nav_calc">Стоимость</a>
       </nav>
-      <div class="flex items-center gap-2">
-        <div class="lang-switch" role="group" aria-label="Language">
+      <div class="vh-right vh-fd" style="--i:5">
+        <div class="lang-switch vh-lang" role="group" aria-label="Language">
           <button type="button" data-lang="ru" onclick="setLang('ru')">RU</button>
           <button type="button" data-lang="en" onclick="setLang('en')">EN</button>
         </div>
-        <a href="https://t.me/velion_manager" target="_blank" rel="noopener" class="btn-glass hidden sm:inline-flex items-center gap-2 rounded-[12px] pl-4 pr-3 py-2.5 text-[15px] font-medium">
-          <span data-i18n="nav_contact">Связаться</span>
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-        </a>
-        <button class="ham md:hidden mx-2.5" id="ham-btn" aria-label="Menu" onclick="toggleMob()"><span></span><span></span><span></span></button>
+        <button class="vh-burger" id="ham-btn" aria-label="Menu" onclick="toggleMob()"><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
-  <div id="mob-menu">
-    <div class="mob-drawer glass-nav">
-      <a href="#services" class="mob-link" onclick="closeMob()" data-i18n="nav_services">Услуги</a>
-      <a href="#ai" class="mob-link" onclick="closeMob()" data-i18n="nav_ai">ИИ-агенты</a>
-      <a href="#cases" class="mob-link" onclick="closeMob()" data-i18n="nav_cases">Кейсы</a>
-      <a href="#calc" class="mob-link" onclick="closeMob()" data-i18n="nav_calc">Стоимость</a>
-      <a href="https://t.me/velion_manager" target="_blank" rel="noopener" class="btn-cta flex items-center justify-center rounded-[14px] py-3.5 mt-2 font-medium" data-i18n="nav_contact">Связаться</a>
+
+  <!-- ============ MENU OVERLAY ============ -->
+  <div id="mob-menu" class="vh-menu" aria-hidden="true">
+    <div class="vh-menu-top">
+      <a href="#top" class="vh-logo" onclick="closeMob()" aria-label="Velion"><span class="vh-logo-ring"><span class="vh-logo-dot"></span></span><span class="vh-logo-word">Velion</span></a>
+      <button class="vh-close" aria-label="Close" onclick="closeMob()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <nav class="vh-menu-links">
+      <a href="#services" onclick="closeMob()" data-i18n="nav_services">Услуги</a>
+      <a href="#ai" onclick="closeMob()" data-i18n="nav_ai">ИИ-агенты</a>
+      <a href="#cases" onclick="closeMob()" data-i18n="nav_cases">Кейсы</a>
+      <a href="#calc" onclick="closeMob()" data-i18n="nav_calc">Стоимость</a>
+    </nav>
+    <div class="vh-menu-foot">
+      <a href="https://t.me/velion_manager" target="_blank" rel="noopener" class="vh-cta vh-cta-xl"><span data-i18n="vh_cta">Обсудить проект</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <div class="lang-switch vh-lang" role="group" aria-label="Language">
+        <button type="button" data-lang="ru" onclick="setLang('ru')">RU</button>
+        <button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
     </div>
   </div>
 
   <main id="top">
 
   <!-- ============ HERO ============ -->
-  <div id="hero" class="relative" style="overflow-x:clip">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="glow drift -top-[260px] -left-[220px] w-[760px] h-[560px] bg-[#60B1FF] opacity-40 blur-[140px]"></div>
-      <div class="glow drift-2 -top-[180px] -left-[60px] w-[520px] h-[380px] bg-[#319AFF] opacity-30 blur-[120px]"></div>
-      <div class="glow drift top-[40px] -left-[160px] w-[420px] h-[300px] bg-[#60B1FF] opacity-25 blur-[100px]"></div>
-      <div class="glow drift-2 top-[20%] right-[5%] w-[520px] h-[420px] bg-[#8B7BFF] opacity-[.18] blur-[140px]"></div>
-      <div class="glow drift top-[-120px] right-[-160px] w-[720px] h-[520px] bg-[#7DD3FC] opacity-[.35] blur-[150px]"></div>
-      <div class="glow drift-2 bottom-[-160px] left-[30%] w-[820px] h-[420px] bg-[#A78BFA] opacity-[.22] blur-[160px]"></div>
-      <div class="glow drift bottom-[10%] -left-[200px] w-[520px] h-[420px] bg-[#93C5FD] opacity-[.30] blur-[150px]"></div>
-      <div class="hero-grid"></div>
-      <div class="hero-grid-hot"></div>
-      <div class="hero-spot"></div>
-      <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span><span class="bubble b4"></span><span class="bubble b5"></span>
+  <section id="hero" class="vh play">
+    <div class="vh-media" aria-hidden="true">
+      <video class="vh-video" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260517_222138_3e3205be-3364-417b-a64a-bfe087acbec4.mp4" autoplay loop muted playsinline preload="auto"></video>
+      <div class="vh-veil"></div>
     </div>
 
-    <div class="relative z-10 max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-16">
-      <section class="grid grid-cols-1 lg:grid-cols-2 items-center gap-4 lg:gap-0 pt-24 sm:pt-32 lg:pt-28 lg:min-h-[calc(100vh-150px)]">
-        <!-- left -->
-        <div class="order-2 lg:order-1 max-w-[680px]">
-          <div class="btn-glass pill hero-in" style="animation-delay:.05s">
-            <span class="flex gap-0.5" aria-hidden="true"><svg class="w-4 h-4 fill-[#FF801E]" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg><svg class="w-4 h-4 fill-[#FF801E]" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg><svg class="w-4 h-4 fill-[#FF801E]" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg><svg class="w-4 h-4 fill-[#FF801E]" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg><svg class="w-4 h-4 fill-[#FF801E]" viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg></span>
-            <span data-i18n-html="hero_proof"><b class="font-semibold text-ink">50+</b> проектов запущено под ключ</span>
-          </div>
-          <h1 class="h-hero mt-6 hero-in" style="animation-delay:.12s" data-i18n-html="hero_title">Сайты, боты и <span class="gradient-text">ИИ-агенты</span>, которые приносят заявки</h1>
-          <p class="mt-6 text-[17px] sm:text-[18px] leading-[1.55] tight text-black/60 max-w-[540px] hero-in" style="animation-delay:.22s" data-i18n="hero_sub">Проектируем сайты, Telegram-ботов и ИИ-агентов, которые работают на результат: больше заявок, меньше рутины. Первый запуск — за 7–14 дней.</p>
-          <div class="mt-9 flex flex-col sm:flex-row lg:flex-col xl:flex-row sm:items-center lg:items-start xl:items-center gap-3 hero-in" style="animation-delay:.32s">
-            <a href="https://t.me/velion_manager" target="_blank" rel="noopener" class="btn-cta inline-flex items-center justify-between sm:justify-start gap-4 rounded-[16px] pl-6 pr-2 py-2 text-[16px] font-medium">
-              <span class="sm:whitespace-nowrap" data-i18n="hero_cta1">Разобрать мой процесс бесплатно</span>
-              <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </a>
-            <a href="#cases" class="btn-glass inline-flex items-center justify-center rounded-[16px] px-6 py-[17px] text-[16px] font-medium whitespace-nowrap" data-i18n="hero_cta2">Смотреть кейсы</a>
-          </div>
-        </div>
-        <!-- right: glassy orb -->
-        <div class="order-1 lg:order-2 relative flex items-center justify-center pointer-events-none select-none orb-in" style="animation-delay:.2s">
-          <div class="orbits" aria-hidden="true"><span class="ring r1"><i></i></span><span class="ring r2"><i></i></span><span class="ring r3"><i></i></span></div>
-          <div class="float w-full flex justify-center relative z-[1]"><div class="orb-tilt w-full flex justify-center"><video class="orb scale-125 w-full max-w-[380px] sm:max-w-[540px] lg:max-w-[820px] aspect-square object-cover lg:translate-x-[6%]"
-            src="https://future.co/images/homepage/glassy-orb/orb-purple.webm" autoplay loop muted playsinline aria-hidden="true"></video></div></div>
-        </div>
-      </section>
-
-      <!-- trusted by -->
-      <section class="pt-10 lg:pt-2 pb-16">
-        <p class="text-center text-[14px] font-medium text-black/45" data-i18n="trusted">Нам доверяют компании, которые растут</p>
-        <div class="marquee mt-7"><div class="marquee-track">
-          <span class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v12H4z" opacity=".35"/><path d="M7 7h2v6H7zm4 0h2v6h-2zm4 0h2v6h-2zM8 18h8v2H8z"/></svg>MAING</span>
-          <span class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 8h2l4 6V8h2v8h-2l-4-6v6H8z" fill="#fff"/></svg>NoHassle</span>
-          <span class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 7h8v2.5h-5.5v1.6H15v2.4h-4.5v1.5H16V17H8z" fill="#fff"/></svg>EgoLab</span>
-          <span class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.6 20c-.3 1.1-.9 1.4-1.8.9l-5-3.7-2.5 2.4c-.3.3-.5.5-1 .5l.4-5.2 9.4-8.5c.4-.4-.1-.6-.6-.2L5.1 13.3l-5-1.6c-1.1-.3-1.1-1.1.2-1.6L19.9 2.6c.9-.3 1.7.2 2 1.7z"/></svg>Telegram</span>
-          <span class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>amoCRM</span>
-          <span aria-hidden="true" class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v12H4z" opacity=".35"/><path d="M7 7h2v6H7zm4 0h2v6h-2zm4 0h2v6h-2zM8 18h8v2H8z"/></svg>MAING</span>
-          <span aria-hidden="true" class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 8h2l4 6V8h2v8h-2l-4-6v6H8z" fill="#fff"/></svg>NoHassle</span>
-          <span aria-hidden="true" class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 7h8v2.5h-5.5v1.6H15v2.4h-4.5v1.5H16V17H8z" fill="#fff"/></svg>EgoLab</span>
-          <span aria-hidden="true" class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.6 20c-.3 1.1-.9 1.4-1.8.9l-5-3.7-2.5 2.4c-.3.3-.5.5-1 .5l.4-5.2 9.4-8.5c.4-.4-.1-.6-.6-.2L5.1 13.3l-5-1.6c-1.1-.3-1.1-1.1.2-1.6L19.9 2.6c.9-.3 1.7.2 2 1.7z"/></svg>Telegram</span>
-          <span aria-hidden="true" class="logo-item f-display text-[22px]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>amoCRM</span>
-        </div></div>
-      </section>
-
-      <!-- stats -->
-      <section class="reveal glass rounded-[24px] grid grid-cols-2 md:grid-cols-4 overflow-hidden mb-6">
-        <div class="p-6 md:p-8 border-b border-r border-black/[.06] md:border-b-0"><div class="f-display text-[40px] md:text-[52px] leading-none tracking-[-2px] gradient-text" data-count="50" data-suffix="+">50+</div><div class="text-[14px] text-black/55 mt-2" data-i18n="stat_projects">проектов</div></div>
-        <div class="p-6 md:p-8 border-b border-black/[.06] md:border-b-0 md:border-r"><div class="f-display text-[40px] md:text-[52px] leading-none tracking-[-2px] gradient-text">7–10</div><div class="text-[14px] text-black/55 mt-2" data-i18n="stat_days">дней на запуск</div></div>
-        <div class="p-6 md:p-8 border-r border-black/[.06]"><div class="f-display text-[40px] md:text-[52px] leading-none tracking-[-2px] gradient-text">24/7</div><div class="text-[14px] text-black/55 mt-2" data-i18n="stat_support">поддержка online</div></div>
-        <div class="p-6 md:p-8"><div class="f-display text-[40px] md:text-[52px] leading-none tracking-[-2px] gradient-text" data-count="0.4" data-dec="1" data-suffix="s">0.4s</div><div class="text-[14px] text-black/55 mt-2" data-i18n="stat_ai">ответ ИИ-агента</div></div>
-      </section>
+    <!-- stats -->
+    <div class="vh-stats-wrap">
+      <div class="vh-stats">
+        <div class="vh-stat vh-fu" style="--i:2"><div class="vh-num"><span class="vh-plus">+</span>50</div><div class="vh-lab" data-i18n="vh_s1">Проектов
+под ключ</div></div>
+        <div class="vh-stat vh-fu" style="--i:3"><div class="vh-num">7<span class="vh-plus">–</span>10</div><div class="vh-lab" data-i18n="vh_s2">Дней
+до запуска</div></div>
+        <div class="vh-stat vh-fu" style="--i:4"><div class="vh-num">24<span class="vh-plus">/</span>7</div><div class="vh-lab" data-i18n="vh_s3">ИИ-агенты
+на связи</div></div>
+      </div>
     </div>
-  </div>
+
+    <!-- bottom -->
+    <div class="vh-bottom">
+      <div class="vh-row-a">
+        <p class="vh-tag vh-fu" style="--i:5" data-i18n-html="vh_tag">Сайты, боты<br>и ИИ-агенты<br>под ключ</p>
+        <a href="https://t.me/velion_manager" target="_blank" rel="noopener" class="vh-cta vh-fu" style="--i:6"><span data-i18n="vh_cta">Обсудить проект</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </div>
+      <div class="vh-row-b">
+        <div class="vh-desc-wrap vh-fu" style="--i:7"><p class="vh-desc" data-i18n="vh_desc">Цифровое агентство, которое превращает сайты, ботов и ИИ-агентов в поток заявок</p></div>
+        <h1 class="vh-h1">
+          <span class="vh-wl"><span class="vh-w" style="--w:0" data-i18n="vh_w1">Сайты</span></span>
+          <span class="vh-wl"><span class="vh-w" style="--w:1" data-i18n="vh_w2">Боты</span></span>
+          <span class="vh-wl"><span class="vh-w" style="--w:2" data-i18n="vh_w3">ИИ‑агенты</span></span>
+        </h1>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ MARQUEE BAND ============ -->
   <div class="nh-band" aria-hidden="true">
@@ -1159,8 +1251,8 @@ const I18N = {
     foot_social:"Find us on social", foot_tag:"© 2026 Velion · Websites · Bots · AI agents", foot_manager:"Manager", foot_portfolio:"Portfolio",
   }
 };
-Object.assign(I18N.ru, {"svc1_p": "7–14 дней", "svc2_p": "3–7 дней", "svc3_p": "10–20 дней", "svc4_p": "5–10 дней", "svc5_p": "по ТЗ", "svc6_p": "ежемесячно", "svc1_l": "<span class=\"it\">Лендинг под рекламу</span><span class=\"it\">Многостраничный сайт</span><span class=\"it\">Интернет-магазин</span><span class=\"it\">Редизайн старого сайта</span><span class=\"it\">Адаптив под телефоны</span><span class=\"it\">Формы заявок в Telegram и CRM</span><span class=\"it\">SEO-база и аналитика</span>", "svc2_l": "<span class=\"it\">Бот для заявок</span><span class=\"it\">Бот онлайн-записи</span><span class=\"it\">Приём оплат</span><span class=\"it\">Рассылки по базе</span><span class=\"it\">Воронки продаж</span><span class=\"it\">Telegram Mini App</span><span class=\"it\">Связка с CRM и таблицами</span>", "svc3_l": "<span class=\"it\">Ответы клиентам 24/7</span><span class=\"it\">Квалификация лидов</span><span class=\"it\">Запись и встречи в календарь</span><span class=\"it\">Обучение на ваших скриптах и FAQ</span><span class=\"it\">Работа с документами</span><span class=\"it\">Передача горячих лидов менеджеру</span>", "svc4_l": "<span class=\"it\">Связка CRM, таблиц и мессенджеров</span><span class=\"it\">Уведомления о заказах</span><span class=\"it\">Автоматические отчёты</span><span class=\"it\">Сценарии n8n / Make</span><span class=\"it\">Интеграции по API</span><span class=\"it\">Парсинг и выгрузки данных</span>", "svc5_l": "<span class=\"it\">Личные кабинеты</span><span class=\"it\">Внутренние CRM и дашборды</span><span class=\"it\">Админ-панели</span><span class=\"it\">Парсеры</span><span class=\"it\">Интеграции с внешними API</span><span class=\"it\">MVP продукта</span>", "svc6_l": "<span class=\"it\">Доработки и новые функции</span><span class=\"it\">Мониторинг и аптайм</span><span class=\"it\">Обновления и бэкапы</span><span class=\"it\">Аналитика и отчёты</span><span class=\"it\">Правки текстов и цен</span><span class=\"it\">Приоритетная поддержка</span>", "hero_title": "Сайты, боты и <span class=\"gradient-text\">ИИ‑агенты</span>,<br>которые приносят заявки.", "hc1_t": "Новая заявка", "hc1_s": "из Telegram · только что", "hc2_t": "ИИ‑агент ответил", "hc2_s": "за 0.4 секунды", "hc3_t": "Сайт запущен", "hc3_s": "через 7 дней после старта", "svc_cta": "Обсудить", "svc_note": "Нажмите на направление, чтобы увидеть, что в него входит. Нужно что-то другое — просто напишите.", "done_kicker": "Не только сайты", "done_h2": "Что ещё сделали для клиентов", "done_intro": "Сайт — это только начало. Для клиентов мы закрываем всё, что вокруг него: боты, рассылки, соцсети и автоматизацию.", "d1_list": "<li>Сайт maing.ru с каталогом и расчётом стоимости</li><li>Telegram-боты для приёма заявок</li><li>Рассылки по клиентской базе</li><li>Ведение соцсетей</li><li>Объявления и фиды для Авито</li>", "d2_list": "<li>Лендинг nohassle.ru</li><li>Сценарий заявки в Telegram</li><li>Анимации и адаптив под телефоны</li><li>Тексты и структура услуг</li>", "d3_list": "<li>Интернет-магазин egolab.shop</li><li>Админка, промокоды и доставка</li><li>Боты для заказов и поддержки</li><li>Настройка соцсетей</li><li>Ролики для TikTok</li>", "cp_site": "от 4 000 ₽", "cp_redesign": "от 3 000 ₽", "cp_bot": "от 2 650 ₽", "cp_ai": "от 4 125 ₽", "cp_auto": "от 3 300 ₽", "cp_custom": "от 5 000 ₽"});
-Object.assign(I18N.en, {"svc1_p": "7–14 days", "svc2_p": "3–7 days", "svc3_p": "10–20 days", "svc4_p": "5–10 days", "svc5_p": "by spec", "svc6_p": "monthly", "svc1_l": "<span class=\"it\">Landing page for ads</span><span class=\"it\">Multi-page website</span><span class=\"it\">Online store</span><span class=\"it\">Redesign</span><span class=\"it\">Mobile-ready layout</span><span class=\"it\">Lead forms to Telegram & CRM</span><span class=\"it\">SEO basics & analytics</span>", "svc2_l": "<span class=\"it\">Lead bot</span><span class=\"it\">Booking bot</span><span class=\"it\">Payments</span><span class=\"it\">Broadcasts</span><span class=\"it\">Sales funnels</span><span class=\"it\">Telegram Mini App</span><span class=\"it\">CRM & sheets sync</span>", "svc3_l": "<span class=\"it\">24/7 client replies</span><span class=\"it\">Lead qualification</span><span class=\"it\">Meetings to calendar</span><span class=\"it\">Trained on your scripts & FAQ</span><span class=\"it\">Document handling</span><span class=\"it\">Hot-lead handoff to managers</span>", "svc4_l": "<span class=\"it\">CRM, sheets & messengers sync</span><span class=\"it\">Order notifications</span><span class=\"it\">Automatic reports</span><span class=\"it\">n8n / Make scenarios</span><span class=\"it\">API integrations</span><span class=\"it\">Data parsing & exports</span>", "svc5_l": "<span class=\"it\">Client portals</span><span class=\"it\">Internal CRMs & dashboards</span><span class=\"it\">Admin panels</span><span class=\"it\">Parsers</span><span class=\"it\">External API integrations</span><span class=\"it\">Product MVP</span>", "svc6_l": "<span class=\"it\">Improvements & new features</span><span class=\"it\">Monitoring & uptime</span><span class=\"it\">Updates & backups</span><span class=\"it\">Analytics & reports</span><span class=\"it\">Copy and price edits</span><span class=\"it\">Priority support</span>", "hc1_t": "New lead", "hc1_s": "from Telegram · just now", "hc2_t": "AI agent replied", "hc2_s": "in 0.4 seconds", "hc3_t": "Website launched", "hc3_s": "7 days after kickoff", "svc_cta": "Discuss", "svc_note": "Tap a direction to see what is included. Need something else — just message us.", "done_kicker": "Not just websites", "done_h2": "What else we built for clients", "done_intro": "A website is only the start. We handle everything around it: bots, broadcasts, social media and automation.", "d1_list": "<li>maing.ru website with catalogue and price estimate</li><li>Telegram bots for leads</li><li>Broadcasts to the client base</li><li>Social media management</li><li>Avito listings and feeds</li>", "d2_list": "<li>nohassle.ru landing page</li><li>Telegram lead scenario</li><li>Animations and mobile layout</li><li>Copy and service structure</li>", "d3_list": "<li>egolab.shop online store</li><li>Admin panel, promo codes and shipping</li><li>Order and support bots</li><li>Social media setup</li><li>TikTok videos</li>", "cp_site": "from 4,000 ₽", "cp_redesign": "from 3,000 ₽", "cp_bot": "from 2,650 ₽", "cp_ai": "from 4,125 ₽", "cp_auto": "from 3,300 ₽", "cp_custom": "from 5,000 ₽"});
+Object.assign(I18N.ru, {"svc1_p": "7–14 дней", "svc2_p": "3–7 дней", "svc3_p": "10–20 дней", "svc4_p": "5–10 дней", "svc5_p": "по ТЗ", "svc6_p": "ежемесячно", "svc1_l": "<span class=\"it\">Лендинг под рекламу</span><span class=\"it\">Многостраничный сайт</span><span class=\"it\">Интернет-магазин</span><span class=\"it\">Редизайн старого сайта</span><span class=\"it\">Адаптив под телефоны</span><span class=\"it\">Формы заявок в Telegram и CRM</span><span class=\"it\">SEO-база и аналитика</span>", "svc2_l": "<span class=\"it\">Бот для заявок</span><span class=\"it\">Бот онлайн-записи</span><span class=\"it\">Приём оплат</span><span class=\"it\">Рассылки по базе</span><span class=\"it\">Воронки продаж</span><span class=\"it\">Telegram Mini App</span><span class=\"it\">Связка с CRM и таблицами</span>", "svc3_l": "<span class=\"it\">Ответы клиентам 24/7</span><span class=\"it\">Квалификация лидов</span><span class=\"it\">Запись и встречи в календарь</span><span class=\"it\">Обучение на ваших скриптах и FAQ</span><span class=\"it\">Работа с документами</span><span class=\"it\">Передача горячих лидов менеджеру</span>", "svc4_l": "<span class=\"it\">Связка CRM, таблиц и мессенджеров</span><span class=\"it\">Уведомления о заказах</span><span class=\"it\">Автоматические отчёты</span><span class=\"it\">Сценарии n8n / Make</span><span class=\"it\">Интеграции по API</span><span class=\"it\">Парсинг и выгрузки данных</span>", "svc5_l": "<span class=\"it\">Личные кабинеты</span><span class=\"it\">Внутренние CRM и дашборды</span><span class=\"it\">Админ-панели</span><span class=\"it\">Парсеры</span><span class=\"it\">Интеграции с внешними API</span><span class=\"it\">MVP продукта</span>", "svc6_l": "<span class=\"it\">Доработки и новые функции</span><span class=\"it\">Мониторинг и аптайм</span><span class=\"it\">Обновления и бэкапы</span><span class=\"it\">Аналитика и отчёты</span><span class=\"it\">Правки текстов и цен</span><span class=\"it\">Приоритетная поддержка</span>", "hero_title": "Сайты, боты и <span class=\"gradient-text\">ИИ‑агенты</span>,<br>которые приносят заявки.", "hc1_t": "Новая заявка", "hc1_s": "из Telegram · только что", "hc2_t": "ИИ‑агент ответил", "hc2_s": "за 0.4 секунды", "hc3_t": "Сайт запущен", "hc3_s": "через 7 дней после старта", "vh_s1": "Проектов\nпод ключ", "vh_s2": "Дней\nдо запуска", "vh_s3": "ИИ-агенты\nна связи", "vh_tag": "Сайты, боты<br>и ИИ-агенты<br>под ключ", "vh_cta": "Обсудить проект", "vh_desc": "Цифровое агентство, которое превращает сайты, ботов и ИИ-агентов в поток заявок", "vh_w1": "Сайты", "vh_w2": "Боты", "vh_w3": "ИИ‑агенты", "svc_cta": "Обсудить", "svc_note": "Нажмите на направление, чтобы увидеть, что в него входит. Нужно что-то другое — просто напишите.", "done_kicker": "Не только сайты", "done_h2": "Что ещё сделали для клиентов", "done_intro": "Сайт — это только начало. Для клиентов мы закрываем всё, что вокруг него: боты, рассылки, соцсети и автоматизацию.", "d1_list": "<li>Сайт maing.ru с каталогом и расчётом стоимости</li><li>Telegram-боты для приёма заявок</li><li>Рассылки по клиентской базе</li><li>Ведение соцсетей</li><li>Объявления и фиды для Авито</li>", "d2_list": "<li>Лендинг nohassle.ru</li><li>Сценарий заявки в Telegram</li><li>Анимации и адаптив под телефоны</li><li>Тексты и структура услуг</li>", "d3_list": "<li>Интернет-магазин egolab.shop</li><li>Админка, промокоды и доставка</li><li>Боты для заказов и поддержки</li><li>Настройка соцсетей</li><li>Ролики для TikTok</li>", "cp_site": "от 4 000 ₽", "cp_redesign": "от 3 000 ₽", "cp_bot": "от 2 650 ₽", "cp_ai": "от 4 125 ₽", "cp_auto": "от 3 300 ₽", "cp_custom": "от 5 000 ₽"});
+Object.assign(I18N.en, {"svc1_p": "7–14 days", "svc2_p": "3–7 days", "svc3_p": "10–20 days", "svc4_p": "5–10 days", "svc5_p": "by spec", "svc6_p": "monthly", "svc1_l": "<span class=\"it\">Landing page for ads</span><span class=\"it\">Multi-page website</span><span class=\"it\">Online store</span><span class=\"it\">Redesign</span><span class=\"it\">Mobile-ready layout</span><span class=\"it\">Lead forms to Telegram & CRM</span><span class=\"it\">SEO basics & analytics</span>", "svc2_l": "<span class=\"it\">Lead bot</span><span class=\"it\">Booking bot</span><span class=\"it\">Payments</span><span class=\"it\">Broadcasts</span><span class=\"it\">Sales funnels</span><span class=\"it\">Telegram Mini App</span><span class=\"it\">CRM & sheets sync</span>", "svc3_l": "<span class=\"it\">24/7 client replies</span><span class=\"it\">Lead qualification</span><span class=\"it\">Meetings to calendar</span><span class=\"it\">Trained on your scripts & FAQ</span><span class=\"it\">Document handling</span><span class=\"it\">Hot-lead handoff to managers</span>", "svc4_l": "<span class=\"it\">CRM, sheets & messengers sync</span><span class=\"it\">Order notifications</span><span class=\"it\">Automatic reports</span><span class=\"it\">n8n / Make scenarios</span><span class=\"it\">API integrations</span><span class=\"it\">Data parsing & exports</span>", "svc5_l": "<span class=\"it\">Client portals</span><span class=\"it\">Internal CRMs & dashboards</span><span class=\"it\">Admin panels</span><span class=\"it\">Parsers</span><span class=\"it\">External API integrations</span><span class=\"it\">Product MVP</span>", "svc6_l": "<span class=\"it\">Improvements & new features</span><span class=\"it\">Monitoring & uptime</span><span class=\"it\">Updates & backups</span><span class=\"it\">Analytics & reports</span><span class=\"it\">Copy and price edits</span><span class=\"it\">Priority support</span>", "hc1_t": "New lead", "hc1_s": "from Telegram · just now", "hc2_t": "AI agent replied", "hc2_s": "in 0.4 seconds", "hc3_t": "Website launched", "hc3_s": "7 days after kickoff", "vh_s1": "Projects\nend-to-end", "vh_s2": "Days\nto launch", "vh_s3": "AI agents\nalways on", "vh_tag": "Websites, bots<br>and AI agents<br>end-to-end", "vh_cta": "Start a project", "vh_desc": "A digital studio turning websites, bots and AI agents into a steady flow of leads", "vh_w1": "Websites", "vh_w2": "Bots", "vh_w3": "AI agents", "svc_cta": "Discuss", "svc_note": "Tap a direction to see what is included. Need something else — just message us.", "done_kicker": "Not just websites", "done_h2": "What else we built for clients", "done_intro": "A website is only the start. We handle everything around it: bots, broadcasts, social media and automation.", "d1_list": "<li>maing.ru website with catalogue and price estimate</li><li>Telegram bots for leads</li><li>Broadcasts to the client base</li><li>Social media management</li><li>Avito listings and feeds</li>", "d2_list": "<li>nohassle.ru landing page</li><li>Telegram lead scenario</li><li>Animations and mobile layout</li><li>Copy and service structure</li>", "d3_list": "<li>egolab.shop online store</li><li>Admin panel, promo codes and shipping</li><li>Order and support bots</li><li>Social media setup</li><li>TikTok videos</li>", "cp_site": "from 4,000 ₽", "cp_redesign": "from 3,000 ₽", "cp_bot": "from 2,650 ₽", "cp_ai": "from 4,125 ₽", "cp_auto": "from 3,300 ₽", "cp_custom": "from 5,000 ₽"});
 
 let LANG = "ru";
 function store(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
@@ -1479,6 +1571,44 @@ document.addEventListener("DOMContentLoaded",()=>{
     addEventListener('keydown', function(){ running = false; });
     document.addEventListener('click', function(e){ if(e.target.closest('a[href^="#"]')) running = false; });
   });
+})();
+</script>
+<script>
+/* ===== Video hero behaviour ===== */
+(function(){
+  var hdr = document.getElementById('site-header'), hero = document.getElementById('hero');
+  var menu = document.getElementById('mob-menu'), burger = document.getElementById('ham-btn');
+
+  // nav fades down on load
+  requestAnimationFrame(function(){ document.body.classList.add('play-nav'); });
+
+  // header gets a solid backdrop once you leave the top
+  var onScroll = function(){ hdr.classList.toggle('scrolled', window.scrollY > 40); };
+  addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+  // menu overlay
+  window.toggleMob = function(){ var o = !menu.classList.contains('open'); menu.classList.toggle('open', o); menu.setAttribute('aria-hidden', o ? 'false' : 'true'); document.documentElement.style.overflow = o ? 'hidden' : ''; hdr.classList.remove('hide'); };
+  window.closeMob = function(){ menu.classList.remove('open'); menu.setAttribute('aria-hidden', 'true'); document.documentElement.style.overflow = ''; };
+  addEventListener('keydown', function(e){ if(e.key === 'Escape') window.closeMob(); });
+
+  // replay the hero entrance every time it comes back into view
+  if('IntersectionObserver' in window){
+    var away = false;
+    new IntersectionObserver(function(es){ es.forEach(function(e){
+      if(!e.isIntersecting || e.intersectionRatio < .02){ away = true; hero.classList.remove('play'); return; }
+      if(away && e.intersectionRatio > .25){ away = false; void hero.offsetWidth; hero.classList.add('play'); }
+    }); }, { threshold:[0, .02, .25] }).observe(hero);
+  }
+
+  // video drifts with the cursor
+  var vid = hero.querySelector('.vh-video');
+  if(vid && window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    hero.addEventListener('pointermove', function(e){
+      var r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      vid.style.transform = 'translate3d(' + (x * -28) + 'px,' + (y * -18) + 'px,0) scale(1.02)';
+    });
+    hero.addEventListener('pointerleave', function(){ vid.style.transform = ''; });
+  }
 })();
 </script>
 </body>
